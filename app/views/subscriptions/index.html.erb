@@ -1,0 +1,9 @@
+<% provide(:title, 'Subscriptions') %>
+<% provide(:form, render('form')) %>
+<% provide(:filter_actions, entry_filter_actions) %>
+
+<% if @subscriptions.any? %>
+    <%= render @subscriptions %>
+<% else %>
+    <em>no subscriptions to view</em>
+<% end %>

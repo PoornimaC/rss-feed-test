@@ -1,0 +1,6 @@
+<% provide(:title, 'Feeds') %>
+<% if @feeds.any? %>
+    <%= render @feeds %>
+<% else %>
+    <em>no feeds to view</em>
+<% end %>

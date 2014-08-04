@@ -1,0 +1,23 @@
+<% unless @parent %>
+    <% provide(:title, @title) %>
+    <% provide(:subtitle, link_to('subscriptions', subscriptions_path(@filters))) %>
+    <% provide(:form, render('subscriptions/form')) %>
+<% end %>
+<% provide(:filter_actions, entry_filter_actions) %>
+<% if @entries.unseen_by(current_user).any? %>
+    <div style="text-align: right">
+            <%= mark_all_seen_action([@parent, :entries]) %>
+    </div>
+<% end %>
+<% @entries = @entries.paginate(page: @page) %>
+<div style="text-align: center;">
+    <%= will_paginate(@entries, params: @filters) %>
+</div>
+
+<% if @entries.any? %>
+    <%= render @entries %>
+<% else %>
+    <div style="text-align: center">
+        <em>no entries to view</em>
+    </div>
+<% end %>

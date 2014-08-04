@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @appname %></title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+</head>
+<body>
+<div id="all">
+
+    <div class="banner">
+        <span style="font-size:24px;font-weight:bold;"> RSS Feed Test</span>
+
+        <% if signed_in? %>
+            <div class="user">
+                <%= render('shared/admin_actions') if current_user.is_admin? %>
+                Hi, <%= current_user.name %>!
+                <%= link_to "logout", logout_path %>
+            </div>
+        <% end %>
+    </div>
+
+    <nav>
+        <ul class="breadcrumb">
+            <% breadcrumbs() %>
+            <%= yield(:breadcrumbs) %>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="title">
+            <h1><%= yield(:title) %></h1>
+            <h2><%= yield(:subtitle) %></h2>
+        </div>
+    </header>
+
+    <div id="notifications">
+        <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+    </div>
+
+
+    <div id="form">
+        <%= yield(:form) %>
+    </div>
+
+    <nav>
+        <%= yield(:previous) %>
+        <%= yield(:filter_actions) %>
+        <%= yield(:next) %>
+    </nav>
+
+
+    <div id="content">
+    <%= yield %>
+    </div>
+
+    <nav>
+        <%= yield(:previous) %>
+        <%= yield(:next) %>
+    </nav>
+
+    <footer>
+        <%= @appname %>
+        
+    </footer>
+   
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<% show_complete = false unless defined? show_complete %>
+<% @user_state = entry.userstate(current_user) %>
+<a name="<%= dom_id entry %>"></a>
+<article class="entry<%= ' unread' unless @user_state.seen %>">
+<% unless show_complete %>
+	<div class="preview">
+		<div class="actions">
+			<%= render @user_state %>
+		</div>
+		<div class="data">
+			<span class="title title-entry">
+				<%= link_to entry.title, app_path([@parent, entry]) %>
+			</span>
+			<span class="snippet">
+				-
+				<%= entry.snippet %>
+			</span>
+		</div>
+		<div class="time">
+			<%= time_tag(entry.published, time_ago_in_words(entry.published)) if entry.published %>
+		</div>
+		<% unless @parent %>
+			<div class="parent">
+				<%= entry.feed.title %>
+			</div>
+		<% end %>
+	</div>
+<% else %>
+	<header>
+		<%= render @user_state %>
+		<span class="title title-entry">
+			<%= @entry.author %>
+			<% if @entry.published %>
+				@ <%= time_tag(@entry.published) %>
+			<% end %>
+		</span>
+		<%= link_to('(web)', @entry.url) %>
+	</header>
+	<div class ="text">
+		<%= @entry.text.html_safe %>
+	</div>
+	<footer>
+		<%= render @user_state %>
+		<%= link_to('(web)', @entry.url, :data => {:type => 'web'}) %>
+	</footer>
+<% end %>
+</article>
